@@ -30,5 +30,5 @@
         android:id="@+id/release_audio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="释放" />
+        android:text="停止" />
 </LinearLayout>
