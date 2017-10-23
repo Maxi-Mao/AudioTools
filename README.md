@@ -1,7 +1,7 @@
 # AudioTools
-用于音频播放，播放网络或本地音频，一级缓存，存储到硬盘。
+用于音频播放，播放网络或本地音频，一级缓存，存储到sd卡。
 
-[博客地址](http://blog.csdn.net/omrapollo/article/details/78085730)
+博客地址：[http://blog.csdn.net/omrapollo/article/details/78085730](http://blog.csdn.net/omrapollo/article/details/78085730)
 
 # 用法
 
