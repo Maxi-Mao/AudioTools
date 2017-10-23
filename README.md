@@ -1,6 +1,8 @@
 # AudioTools
 用于音频播放，播放网络或本地音频，一级缓存，存储到硬盘。
 
+[博客地址](http://blog.csdn.net/omrapollo/article/details/78085730)
+
 # 用法
 
 ## 初始化
@@ -39,6 +41,22 @@ IMAudioManager.instance().resume();
 
 ```
 IMAudioManager.instance().release();
+```
+
+### 清除缓存：
+
+```
+IMAudioManager.instance().delete(new DeleteListener() {
+                    @Override
+                    public void success() {
+                        Toast.makeText(MainActivity.this, "清除成功！", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void failed(String error) {
+                        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                    }
+                });
 ```
 
 ## 说明

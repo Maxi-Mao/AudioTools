@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.maxi.audiotools.IMAudioManager;
+import com.maxi.audiotools.apis.DeleteListener;
 
 public class MainActivity extends AppCompatActivity {
     private String audioUrl = "http://abv.cn/music/光辉岁月.mp3";
@@ -49,6 +50,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 IMAudioManager.instance().release();
+            }
+        });
+
+        ((Button) findViewById(R.id.delete_audio_cache)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IMAudioManager.instance().delete(new DeleteListener() {
+                    @Override
+                    public void success() {
+                        Toast.makeText(MainActivity.this, "清除成功！", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void failed(String error) {
+                        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

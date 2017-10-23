@@ -4,6 +4,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.maxi.audiotools.IMAudioManager;
+import com.maxi.audiotools.apis.DeleteListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,7 +47,7 @@ public class VoiceFileUtils {
             fileName = getMediaID(url) == null ? url.substring(url.lastIndexOf("/")) : getMediaID(url);
             // 构建文件
             tempFile = new File(file, fileName);
-            Log.i("AUDIO_TOOLS","缓存路径 = " + tempFile.getAbsolutePath());
+            Log.i("AUDIO_TOOLS", "缓存路径 = " + tempFile.getAbsolutePath());
             // 如果文件存在,则返回文件路径,如果文件不存在则返回null并且创建文件
             if (tempFile.exists()) {
                 return tempFile.getAbsolutePath();
@@ -70,8 +71,8 @@ public class VoiceFileUtils {
     private String getMediaID(String url) {
 //        String mediaID = url.split("/media/")[1];
 //        return mediaID.split("/")[0];
-        String mediaID = url.replaceAll("\\.","").replaceAll("/","").replaceAll(":","") + ".aud";
-        Log.i("AUDIO_TOOLS","缓存id = " + mediaID);
+        String mediaID = url.replaceAll("\\.", "").replaceAll("/", "").replaceAll(":", "") + ".aud";
+        Log.i("AUDIO_TOOLS", "缓存id = " + mediaID);
         return mediaID;
     }
 
@@ -175,11 +176,33 @@ public class VoiceFileUtils {
     }
 
     public String getExternDir(String dir) {
-        String path = IMAudioManager.instance().mContext.getCacheDir().getPath() ;
+        String path = IMAudioManager.instance().mContext.getCacheDir().getPath();
         if (dir != null) {
             path += dir;
         }
 
         return path;
     }
+
+    public void recursionDeleteFile(DeleteListener mDeleteListener) {
+        File file = new File(getSdcardPath());
+        if (file.isFile()) {
+            mDeleteListener.failed("error : the path is a file");
+            return;
+        }
+        if (file.isDirectory()) {
+            File[] childFile = file.listFiles();
+            if (childFile == null || childFile.length == 0) {
+                mDeleteListener.failed("the directory is already empty");
+                return;
+            }
+            for (File f : childFile) {
+                if (f.exists()) { // 文件存在
+                    f.delete(); // 删除文件
+                }
+            }
+        }
+        mDeleteListener.success();
+    }
+
 }

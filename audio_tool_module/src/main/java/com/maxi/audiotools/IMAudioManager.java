@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import com.maxi.audiotools.apis.DeleteListener;
 import com.maxi.audiotools.tasks.AudioAsyncTask;
 import com.maxi.audiotools.tools.VoiceFileUtils;
 
@@ -123,4 +124,8 @@ public class IMAudioManager {
         }
     }
 
+    public void delete(DeleteListener mDeleteListener) {
+        VoiceFileUtils fileUtils = new VoiceFileUtils();
+        fileUtils.recursionDeleteFile(mDeleteListener);
+    }
 }
