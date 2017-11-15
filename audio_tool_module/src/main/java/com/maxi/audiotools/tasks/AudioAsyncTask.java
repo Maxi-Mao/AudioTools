@@ -21,16 +21,19 @@ public class AudioAsyncTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
+        HttpURLConnection conn = null;
         try {
             URL url = new URL(params[0]); // 构建URL
             // 构造网络连接
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             // 保存音频文件
             audioFile.exists(params[0]);
             audioFile.saveFile(conn.getInputStream());
-            conn.disconnect(); // 断开网络连接
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            assert conn != null;
+            conn.disconnect(); // 断开网络连接
         }
         return null;
     }
